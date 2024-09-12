@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # database:
+  # image: mariadb
+  # container_name: database
+  # ports:
+  #   - "33020:3306" # Map port 5432 on the host to port 5432 in the container
+  # networks:
+  #   - app-network
+  # environment:
+  #   - MARIADB_ROOT_PASSWORD=my-secret-pw
+  #   - MARIADB_TCP_PORT=3306
+  #   # - MARIADB_DATABASE=job_mapper
+  #   # - MARIADB_USER=root
+  #   # - MARIADB_PASSWORD=my-secret-pw
+  # volumes:
+  #   - db_data:/var/lib/mysql # Mount the volume to persist data
+  #   - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql # Mount the initialization script
+
+  frontend:
+    image: nextjs-frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    # networks:
+    #   - app-network
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "3001:3000"
+    depends_on:
+      - database
+    # networks:
+    #   - app-network
+    environment:
+      - DATABASE_HOST=database-1.ctmeg0eqc4g3.eu-north-1.rds.amazonaws.com
+      - DATABASE_PORT=3306
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=sakatards
+      - DATABASE_NAME=innodb
+
+# networks:
+#   app-network:
+#     driver: bridge
+
+# volumes:
+#   db_data:
