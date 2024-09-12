@@ -9,12 +9,12 @@ import { JobsModule } from './jobs/jobs.module'; // Import Jobs module
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3307,
-      username: 'root',
-      password: 'my-secret-pw',
-      database: 'job_mapper',
+      type: 'mariadb',
+      host: 'database-1.ctmeg0eqc4g3.eu-north-1.rds.amazonaws.com',
+      port: 3306,
+      username: 'admin',
+      password: 'sakatards',
+      database: 'innodb',
       entities: [JobEntity], // Add your entity here	
       synchronize: true, // set to false in production
     }),
